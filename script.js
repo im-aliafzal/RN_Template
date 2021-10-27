@@ -1,32 +1,29 @@
 #!/usr/bin/env node
 
 console.log("This is post init script");
-var inquirer = require("inquirer");
-const output = [];
+const prompts = require("prompts");
 
 const questions = [
   {
-    type: "input",
-    name: "tvShow",
-    message: "What's your favorite TV show?",
+    type: "text",
+    name: "username",
+    message: "What is your GitHub username?",
   },
   {
-    type: "confirm",
-    name: "askAgain",
-    message: "Want to enter another TV show favorite (just hit enter for YES)?",
-    default: true,
+    type: "number",
+    name: "age",
+    message: "How old are you?",
+  },
+  {
+    type: "text",
+    name: "about",
+    message: "Tell something about yourself",
+    initial: "Why should I?",
   },
 ];
 
-function ask() {
-  inquirer.prompt(questions).then((answers) => {
-    output.push(answers.tvShow);
-    if (answers.askAgain) {
-      ask();
-    } else {
-      console.log("Your favorite TV Shows:", output.join(", "));
-    }
-  });
-}
+(async () => {
+  const response = await prompts(questions);
 
-ask();
+  // => response => { username, age, about }
+})();
